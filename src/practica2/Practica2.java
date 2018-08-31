@@ -70,119 +70,7 @@ public class Practica2 {
                     }
                     break;
                     case 2: {
-                        while (true) {
-                            System.out.println("MODIFICA\nElige una opcion.\n1. Busca por nombre completo.\n2. Busca por ID.\n3. Regresar.");
-                            try {
-                                opt = sc.nextInt();
-                            } catch (NumberFormatException nf) {
-                                System.out.println("Solo se aceptan numeros.");
-                                continue;
-                            }
-                            if (opt >= 3) {
-                                break;
-                            }
-                            RPreliminar rp = null;
-                            int ide = -1;
-                            if (opt == 1) {
-                                System.out.println("Introduce el nombre completo :");
-                                String nombre = sc2.nextLine();
-                                rp = Practica2.Busca(rep, nombre);
-                            }
-                            if (opt == 2) {
-                                try {
-                                    System.out.println("Introduce el ID :");
-                                    ide = sc.nextInt();
-                                } catch (NumberFormatException e) {
-                                    System.out.println("Solo caracteres numericos.");
-                                    continue;
-                                }
-                                rp = Practica2.BuscaId(rep, ide);
-                            }
-                            if (rp == null) {
-                                System.out.println("Representante Preliminar no encontrado.");
-                                continue;
-                            }
-                            RPreliminar bk = rp;
-                            rep.remove(rp);
-                            while (true) {
-                                System.out.println("¿Cambiar nombre? S/N");
-                                String opt2 = sc2.nextLine();
-                                if (opt2.equals("S")) {
-                                    System.out.println("Escribe nombre completo. (maximo 2 nombres, minimo 2 apellidos)");
-                                    String[] n = sc2.nextLine().split(" ");
-                                    //cambiar nombre
-                                    if (n.length > 4 || n.length <= 2) {
-                                        System.out.println("Formato incorrecto, cambio no realizado.");
-                                    } else if (n.length == 4) {
-                                        rp.setNombre(n[0] + n[1]);
-                                        rp.setAPaterno(n[2]);
-                                        rp.setAMaterno(n[3]);
-                                    } else {
-                                        rp.setNombre(n[0]);
-                                        rp.setAPaterno(n[1]);
-                                        rp.setAMaterno(n[2]);
-                                    }
-
-                                }
-                                System.out.println("¿Cambiar calidad de representante? S/N");
-                                opt2 = sc2.nextLine();
-                                if (opt2.equals("S")) {
-                                    System.out.println("Escribe la calidad del representante.");
-                                    opt2 = sc2.nextLine();
-                                    rp.setCalidadR(opt2);
-                                }
-                                System.out.println("¿Cambiar id de casilla? S/N");
-                                opt2 = sc2.nextLine();
-                                if (opt2.equals("S")) {
-                                    System.out.println("Escribe el nuevo Id");
-                                    opt = sc.nextInt();
-                                    try {
-                                        Casilla c = casillas.get(opt);
-                                        if(c.getAprobada() == "N"){
-                                            System.out.println("Casilla no aprobada, valor no modificado.")
-                                        } else {
-                                            rp.setCasilla(opt);
-                                        }
-                                    } catch (Exception ss) {
-                                        System.out.println("Casilla inexistente, valor no modificado.");
-                                    }
-                                }
-                                System.out.println("¿Cambiar seccion? S/N");
-                                opt2 = sc2.nextLine();
-                                if (opt2.equals("S")) {
-                                    System.out.println("Escribe la nueva seccion.");
-                                    opt = sc.nextInt();
-                                    rp.setSeccion(opt);
-                                }
-                                if (rep.contains(rp)) {
-                                    System.out.println("Representante ya existente!, sin modificaciones.");
-                                    rep.add(bk);
-                                }
-                                rep.add(rp);
-                                RPreliminar[] aux = new RPreliminar[rep.size()];
-                                for(int i = 0; i < aux.length; i++){
-                                    aux[i] = rep.get(i);
-                                }
-                                Arrays.sort(aux);
-                                rep.clear();
-                                for (RPreliminar rr : aux) {
-                                    rep.add(rr);
-                                }
-                                //ordenar lista
-                                f.delete();
-                                bw.close();
-                                bw = new BufferedWriter(new FileWriter(f));
-                                for (RPreliminar rr : rep) {
-                                    bw.write(rr.toString());
-                                    bw.newLine();
-                                }
-                                System.out.println("Cambio Realizado!");
-                                break;
-
-                            }
-
-                        }
-
+                       modifica(rep,casillas,sc,sc2,bw);
                     }
                     break;
                     case 3: {
@@ -250,6 +138,126 @@ public class Practica2 {
             }
         }
         return null;
+    }
+
+    /**
+    * Metodo para modificar un representante.
+    * @param rep Lista de representantes proleiminares.
+    * @param casillas lista de casillas.
+    * @param sc escaner para leer enteros.
+    * @param sc2 escaner para leer cadenas.
+    * @param bw bufferedwriter para escribir el archivo csv.
+    */
+    public static void Modifica(LinkedList<RPreliminar> rep, LinkedList<RPreliminar> casillas, Scanner sc, Scanner sc2, BufferedWriter bw) {
+        while (true) {
+            System.out.println("MODIFICA\nElige una opcion.\n1. Busca por nombre completo.\n2. Busca por ID.\n3. Regresar.");
+            try {
+                opt = sc.nextInt();
+            } catch (NumberFormatException nf) {
+                System.out.println("Solo se aceptan numeros.");
+                continue;
+            }
+            if (opt >= 3) {
+                break;
+            }
+            RPreliminar rp = null;
+            int ide = -1;
+            if (opt == 1) {
+                System.out.println("Introduce el nombre completo :");
+                String nombre = sc2.nextLine();
+                rp = Practica2.Busca(rep, nombre);
+            }
+            if (opt == 2) {
+                try {
+                    System.out.println("Introduce el ID :");
+                    ide = sc.nextInt();
+                } catch (NumberFormatException e) {
+                    System.out.println("Solo caracteres numericos.");
+                    continue;
+                }
+                rp = Practica2.BuscaId(rep, ide);
+            }
+            if (rp == null) {
+                System.out.println("Representante Preliminar no encontrado.");
+                continue;
+            }
+            RPreliminar bk = rp;
+            rep.remove(rp);
+            while (true) {
+                System.out.println("¿Cambiar nombre? S/N");
+                String opt2 = sc2.nextLine();
+                if (opt2.equals("S")) {
+                    System.out.println("Escribe nombre completo. (maximo 2 nombres, minimo 2 apellidos)");
+                    String[] n = sc2.nextLine().split(" ");
+                      //cambiar nombre
+                    if (n.length > 4 || n.length <= 2) {
+                        System.out.println("Formato incorrecto, cambio no realizado.");
+                    else if (n.length == 4) {
+                        rp.setNombre(n[0] + n[1]);
+                        rp.setAPaterno(n[2]);
+                        rp.setAMaterno(n[3]);
+                    } else {
+                        rp.setNombre(n[0]);
+                        rp.setAPaterno(n[1]);rp.setAMaterno(n[2]);
+                    }
+                }
+                System.out.println("¿Cambiar calidad de representante? S/N");
+                opt2 = sc2.nextLine();
+                if (opt2.equals("S")) {
+                    System.out.println("Escribe la calidad del representante.");
+                    opt2 = sc2.nextLine();
+                    rp.setCalidadR(opt2);
+                }
+                System.out.println("¿Cambiar id de casilla? S/N");
+                opt2 = sc2.nextLine();
+                if (opt2.equals("S")) {
+                    System.out.println("Escribe el nuevo Id");
+                    opt = sc.nextInt();
+                    try {
+                        Casilla c = casillas.get(opt);
+                        if(c.getAprobada() == "N"){
+                            System.out.println("Casilla no aprobada, valor no modificado.")
+                        } else {
+                            rp.setCasilla(opt);
+                        }
+                    } catch (Exception ss) {
+                        System.out.println("Casilla inexistente, valor no modificado.");
+                    }
+                }
+                System.out.println("¿Cambiar seccion? S/N");
+                opt2 = sc2.nextLine();
+                if (opt2.equals("S")) {
+                    System.out.println("Escribe la nueva seccion.");
+                    opt = sc.nextInt();
+                    rp.setSeccion(opt);
+                }
+                if (rep.contains(rp)) {
+                    System.out.println("Representante ya existente!, sin modificaciones.");
+                    rep.add(bk);
+                }
+                rep.add(rp);
+                RPreliminar[] aux = new RPreliminar[rep.size()];
+                for(int i = 0; i < aux.length; i++){
+                    aux[i] = rep.get(i);
+                }
+                Arrays.sort(aux);
+                rep.clear();
+                for (RPreliminar rr : aux) {
+                    rep.add(rr);
+                }
+                //ordenar lista
+                f.delete();
+                bw.close();
+                bw = new BufferedWriter(new FileWriter(f));
+                for (RPreliminar rr : rep) {
+                    bw.write(rr.toString());
+                    bw.newLine();
+                }
+                System.out.println("Cambio Realizado!");
+                break;
+
+            }
+        }
     }
 
 }
