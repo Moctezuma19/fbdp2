@@ -137,8 +137,12 @@ public class Practica2 {
                                     System.out.println("Escribe el nuevo Id");
                                     opt = sc.nextInt();
                                     try {
-                                        casillas.get(opt);
-                                        rp.setCasilla(opt);
+                                        Casilla c = casillas.get(opt);
+                                        if(c.getAprobada() == "N"){
+                                            System.out.println("Casilla no aprobada, valor no modificado.")
+                                        } else {
+                                            rp.setCasilla(opt);
+                                        }
                                     } catch (Exception ss) {
                                         System.out.println("Casilla inexistente, valor no modificado.");
                                     }
