@@ -1,0 +1,10 @@
+---PARA EL REPORTE---
+1. Hay redundancia e inconsistencia de datos en un sistema de archivos.
+2. Hay dificultad en el acceso a los datos en un sistema de archivos.
+3. El sistema de archivos admite objetos no estructurados de gran tamaño en memoria.
+4. Hay problemas de atomicidad. En muchas aplicaciones es crucial asegurar que, cuando ocurra un fallo y sea detectado, se restauren los datos a un estado de consistencia que existía antes del fallo. Es difícil asegurar esta propiedad en un sistema de archivos tradicional.
+5. Debido a que los datos están dispersos en varios archivos, y los archivos pueden estar en diferentes formatos, es difícil escribir nuevos programas de aplicación para recuperar los datos apropiados.
+
+Para almacenar datos no estructurados convendría utilizar un sistema de archivos, o archivos de gran tamaño, 
+si se desean ocupar datos estructurados o de tamaño "pequeño" que se relacionan entre sí, y pueden tener una verda-
+dera utilidad (es decir, además de quererlos almacenar), utilizaría una Base de Datos.
