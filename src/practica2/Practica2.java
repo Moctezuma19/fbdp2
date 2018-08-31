@@ -148,7 +148,7 @@ public class Practica2 {
     * @param sc2 escaner para leer cadenas.
     * @param bw bufferedwriter para escribir el archivo csv.
     */
-    public static void Modifica(LinkedList<RPreliminar> rep, LinkedList<RPreliminar> casillas, Scanner sc, Scanner sc2, BufferedWriter bw) {
+    public static void Modifica(LinkedList<RPreliminar> rep, LinkedList<Casilla> casillas, Scanner sc, Scanner sc2, BufferedWriter bw) {
         while (true) {
             System.out.println("MODIFICA\nElige una opcion.\n1. Busca por nombre completo.\n2. Busca por ID.\n3. Regresar.");
             try {
@@ -158,7 +158,7 @@ public class Practica2 {
                 continue;
             }
             if (opt >= 3) {
-                break;
+                return;
             }
             RPreliminar rp = null;
             int ide = -1;
@@ -254,10 +254,27 @@ public class Practica2 {
                     bw.newLine();
                 }
                 System.out.println("Cambio Realizado!");
-                break;
+                return;
 
             }
         }
+    }
+        /**
+     * Metodo estatico que busca en a un representante preliminar por id en una
+     * lista de prepresentantes y devuelve la casilla asignada.
+     *
+     * @param lista lista en la cual buscar.
+     * @param id ID del representante preliminar.
+     * @return devuelve null si no se encuentra, de lo contrario devuelve la casilla asignada.
+     */
+    public static Casilla BuscaId(LinkedList<RPreliminar> lista, LinkedList<Casilla> casillas, int id) {
+        RPreliminar rp = new RPreliminar(id, "", "", "", "", 0, 0);
+        for (RPreliminar p : lista) {
+            if (rp.equals(p)) {
+                return p;
+            }
+        }
+        return (rp == null)?null:casillas.get(rp.getIdCasilla());
     }
 
 }

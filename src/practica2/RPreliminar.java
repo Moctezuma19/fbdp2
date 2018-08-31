@@ -203,6 +203,13 @@ public class RPreliminar implements Comparable {
     public int getId() {
         return this.id;
     }
+    /**
+    * Metodo para obtener el id de casilla.
+    * @return id de casilla.
+    */
+    public int getIdCasilla(){
+        return this.id_casilla;
+    }
 
     @Override
     public String toString() {
